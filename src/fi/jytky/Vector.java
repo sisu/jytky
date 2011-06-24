@@ -1,4 +1,4 @@
-package fi.shmup;
+package fi.jytky;
 
 /**
  * Vector is a simple immutable geometric 2D-vector.
@@ -78,7 +78,7 @@ public class Vector {
 	public Vector normalize() {
 		return div(length());
 	}
-	
+
 	public float dist2(Vector v) {
 		return sub(v).length2();
 	}
