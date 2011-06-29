@@ -6,10 +6,12 @@ public class Unit implements Drawable {
 
 	Vector pos;
 	Vector vel;
+	float size;
 
 	Unit() {
 		pos = new Vector(0,0);
 		vel = new Vector(0,0);
+		size = 0;
 	}
 
 	void update(float dt) {
@@ -21,5 +23,8 @@ public class Unit implements Drawable {
 	}
 	public Vector getPos() {
 		return pos;
+	}
+	public float getSize() {
+		return 1.5f*size;
 	}
 }

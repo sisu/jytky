@@ -37,8 +37,8 @@ public class Game {
 		if (spawnTime > 0) return;
 		spawnTime += 1;
 		Bot b = new Bot();
-		b.pos = new Vector(-1.f, height*2/3);
-		b.vel = new Vector(0.6f, (float)Math.random()-.5f);
+		b.pos = new Vector(-1.f, height*3/4);
+		b.vel = new Vector(0.6f, .4f*((float)Math.random()-.5f));
 		bots.add(b);
 //		Log.i("asd", "Spawning bot; "+b.pos+" "+b.vel);
 	}
@@ -48,8 +48,15 @@ public class Game {
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 
 	private void updateBullets(float dt) {
-		for(Bullet b : bullets) {
+		for(int i=0; i<bullets.size(); ) {
+			Bullet b = bullets.get(i);
 			b.update(dt);
+			if (b.hits(player)) {
+				bullets.set(i, bullets.get(bullets.size()-1));
+				bullets.remove(bullets.size()-1);
+			} else {
+				++i;
+			}
 		}
 	}
 }

@@ -37,6 +37,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glLoadIdentity();
 		draw(gl, game.player);
 		for(Bot b : game.bots) draw(gl, b);
+		for(Bullet b : game.bullets) draw(gl, b);
 		drawTouch(gl);
 	}
 
@@ -73,14 +74,14 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	void draw(GL10 gl, Drawable d) {
 		int color = d.getColor();
 //		Log.i("asd", "color: "+color);
-		int r = color&0xff, g = (color>>>8)&0xff, b = (color>>>16)&0xff;
+		int b = color&0xff, g = (color>>>8)&0xff, r = (color>>>16)&0xff;
 		gl.glColor4f(r/255.f, g/255.f, b/255.f, 1);
 //		gl.glColor4x(color&0xff, (color>>>8)&0xff, (color>>>16)&0xff, 255);
 //		gl.glColor4f(0, 1, 0, 1);
 		gl.glPushMatrix();
 		Vector pos = d.getPos();
 		gl.glTranslatef(pos.x, pos.y, 0);
-		float s = .1f;
+		float s = d.getSize();
 		gl.glScalef(s, s, s);
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, triBuf);
