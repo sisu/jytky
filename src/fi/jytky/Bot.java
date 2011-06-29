@@ -19,7 +19,7 @@ public class Bot extends Unit {
 		lifeTime -= dt;
 		shootTime -= dt;
 		if (shootTime > 0) return;
-		shootTime += 1.2f;
+		shootTime += 0.7f;
 		
 		Bullet b = new Bullet(.02f, Bullet.BOT);
 		b.pos = pos;

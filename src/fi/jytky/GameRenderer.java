@@ -16,8 +16,8 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 	}
 
 	Game game;
-	float touchSize = 0.15f;
-	Vector touchMid = new Vector(1 - 1.3f * touchSize, 1.3f * touchSize);
+	float touchSize = 0.1f;
+	Vector touchMid = new Vector(.95f - 1.5f * touchSize, .05f + 1.5f * touchSize);
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig eglc) {
 		makeBufs();
