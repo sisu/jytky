@@ -4,9 +4,9 @@ import android.util.Log;
 import java.util.ArrayList;
 
 public class Game {
-
 	public Game() {
 		player = new Player();
+		player.game = this;
 		prevT = System.currentTimeMillis();
 	}
 
@@ -43,6 +43,7 @@ public class Game {
 	Player player;
 	ArrayList<Bot> bots = new ArrayList<Bot>();
 	ArrayList<Bullet> bullets = new ArrayList<Bullet>();
+	ArrayList<Bullet> playerBullets = new ArrayList<Bullet>();
 
 	private void updateBullets(float dt) {
 		for(int i=0; i<bullets.size(); ) {
@@ -54,6 +55,10 @@ public class Game {
 			} else {
 				++i;
 			}
+		}
+		for(int i=0; i<playerBullets.size(); ++i) {
+			Bullet b = playerBullets.get(i);
+			b.update(dt);
 		}
 	}
 

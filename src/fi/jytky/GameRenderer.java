@@ -17,7 +17,9 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 
 	Game game;
 	float touchSize = 0.1f;
-	Vector touchMid = new Vector(.95f - 1.5f * touchSize, .05f + 1.5f * touchSize);
+	Vector touchMid = new Vector(.9f - 1.5f * touchSize, .1f + 1.5f * touchSize);
+	Vector buttonMid = new Vector(.15f, 1.2f);
+	float buttonSize = .12f;
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig eglc) {
 		makeBufs();
@@ -38,22 +40,15 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		draw(gl, game.player);
 		for(Bot b : game.bots) draw(gl, b);
 		for(Bullet b : game.bullets) draw(gl, b);
-		drawTouch(gl);
+		for(Bullet b : game.playerBullets) draw(gl, b);
+		drawButtons(gl);
 	}
 
-	private void drawTouch(GL10 gl) {
-		int n = 16;
-		float[] vs = new float[2 * n];
-		for (int i = 0; i < n; ++i) {
-			float a = (float) (2 * Math.PI * i / n);
-			vs[2 * i] = (float) (touchMid.x + touchSize * Math.cos(a));
-			vs[2 * i + 1] = (float) (touchMid.y + touchSize * Math.sin(a));
-		}
-//		Log.i("asd", vs[0]+" "+vs[1]);
+	private void drawButtons(GL10 gl) {
 		gl.glColor4f(1, 0, 0, 1);
-		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
-		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, makeBuf(vs));
-		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, n);
+		drawCircle(gl, touchMid, touchSize);
+		gl.glColor4f(0, 0, 1, 1);
+		drawCircle(gl, buttonMid, buttonSize);
 	}
 
 	private void setProj(GL10 gl) {
@@ -89,9 +84,31 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		gl.glPopMatrix();
 	}
 	FloatBuffer triBuf;
+	FloatBuffer circleBuf;
+	final int circleVs = 16;
 
 	private void makeBufs() {
-		float[] vs = new float[]{-1, -1, 1, -1, 0, 1};		
-		triBuf = makeBuf(vs);
+		triBuf = makeBuf(new float[]{-1, -1, 1, -1, 0, 1});
+		circleBuf = makeCircle(circleVs);
+	}
+
+	private FloatBuffer makeCircle(int n) {
+		float[] vs = new float[2 * n];
+		for (int i = 0; i < n; ++i) {
+			float a = (float) (2 * Math.PI * i / n);
+			vs[2*i] = (float)Math.cos(a);
+			vs[2*i+1] = (float)Math.sin(a);
+		}
+		return makeBuf(vs);
+	}
+
+	private void drawCircle(GL10 gl, Vector touchMid, float touchSize) {
+		gl.glPushMatrix();
+		gl.glTranslatef(touchMid.x, touchMid.y, 0);
+		gl.glScalef(touchSize, touchSize, touchSize);
+		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		gl.glVertexPointer(2, GL10.GL_FLOAT, 0, circleBuf);
+		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, circleVs);
+		gl.glPopMatrix();
 	}
 }

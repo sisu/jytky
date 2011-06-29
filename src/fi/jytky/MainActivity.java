@@ -55,12 +55,12 @@ class GameView extends GLSurfaceView {
 					Vector v = new Vector(evt.getX() / getWidth(), (getHeight() - evt.getY()) / getWidth());
 					Vector mmid = renderer.touchMid;
 					float dist = renderer.touchSize;
-					if (v.dist(mmid) < 3 * dist) {
+					if (v.dist(mmid) < 4 * dist) {
 						Vector d = v.sub(mmid).div(dist);
 						if (d.length2() > 1) {
 							d = d.normalize();
 						}
-						game.player.vel = d.mult(0.8f);
+						game.player.vel = d.mult(0.6f);
 					} else {
 						game.player.vel = new Vector(0, 0);
 					}
@@ -71,16 +71,16 @@ class GameView extends GLSurfaceView {
 	}
 
 	void printSamples(MotionEvent ev) {
-		final int historySize = ev.getHistorySize();
 		final int pointerCount = ev.getPointerCount();
-		for (int h = 0; h < historySize; h++) {
-			log("At time %d:", ev.getHistoricalEventTime(h));
-			for (int p = 0; p < pointerCount; p++) {
-				log("  pointer %d: (%f,%f)",
-						ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
-			}
-		}
-		System.out.printf("At time %d:", ev.getEventTime());
+//		final int historySize = ev.getHistorySize();
+//		for (int h = 0; h < historySize; h++) {
+//			log("At time %d:", ev.getHistoricalEventTime(h));
+//			for (int p = 0; p < pointerCount; p++) {
+//				log("  pointer %d: (%f,%f)",
+//						ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
+//			}
+//		}
+		log("At time %d:", ev.getEventTime());
 		for (int p = 0; p < pointerCount; p++) {
 			log("  pointer %d: (%f,%f)",
 					ev.getPointerId(p), ev.getX(p), ev.getY(p));
