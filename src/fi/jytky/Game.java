@@ -1,5 +1,6 @@
 package fi.jytky;
 
+import android.util.Log;
 import java.util.ArrayList;
 
 public class Game {
@@ -23,11 +24,7 @@ public class Game {
 				Math.max(0, Math.min(width, player.pos.x)),
 				Math.max(0, Math.min(height, player.pos.y)));
 		
-		for(Bot b : bots) {
-			b.runAI(this, dt);
-			b.update(dt);
-		}
-		
+		updateBots(dt);
 		updateBullets(dt);
 	}
 	
@@ -37,8 +34,8 @@ public class Game {
 		if (spawnTime > 0) return;
 		spawnTime += 1;
 		Bot b = new Bot();
-		b.pos = new Vector(-1.f, height*3/4);
-		b.vel = new Vector(0.6f, .4f*((float)Math.random()-.5f));
+		b.pos = new Vector(-.1f, height*3/4);
+		b.vel = new Vector(0.6f, .3f*((float)Math.random()-.5f));
 		bots.add(b);
 //		Log.i("asd", "Spawning bot; "+b.pos+" "+b.vel);
 	}
@@ -51,9 +48,24 @@ public class Game {
 		for(int i=0; i<bullets.size(); ) {
 			Bullet b = bullets.get(i);
 			b.update(dt);
-			if (b.hits(player)) {
+			if (b.hits(player) || !b.alive()) {
 				bullets.set(i, bullets.get(bullets.size()-1));
 				bullets.remove(bullets.size()-1);
+			} else {
+				++i;
+			}
+		}
+	}
+
+	private void updateBots(float dt) {
+		for(int i=0; i<bots.size(); ) {
+			Bot b = bots.get(i);
+			b.runAI(this, dt);
+			b.update(dt);
+			if (!b.alive()) {
+//				Log.i("asd", "removing bot "+i);
+				bots.set(i, bots.get(bots.size()-1));
+				bots.remove(bots.size()-1);
 			} else {
 				++i;
 			}

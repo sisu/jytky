@@ -19,6 +19,17 @@ public class Bullet extends Unit {
 	}
 
 	@Override
+	void update(float dt) {
+		lifeTime -= dt;
+		super.update(dt);
+	}
+	
+	float lifeTime = 5;
+	boolean alive() {
+		return lifeTime > 0;
+	}
+
+	@Override
 	public int getColor() {
 		return Color.rgb(255,0,0);
 	}
