@@ -8,8 +8,11 @@ public class Game {
 		player = new Player();
 		player.game = this;
 		prevT = System.currentTimeMillis();
+		stage = new FirstStage();
+//		stage = new TestStage();
 	}
 
+	Stage stage;
 	long prevT;
 	float width, height;
 
@@ -17,20 +20,21 @@ public class Game {
 		long time = System.currentTimeMillis();
 		float dt = (time - prevT) / 1000.f;
 		prevT = time;
-		
-		spawnBots(dt);
+
+		stage.update(this, dt);
+//		spawnBots(dt);
 		player.update(dt);
 		player.pos = new Vector(
 				Math.max(0, Math.min(width, player.pos.x)),
 				Math.max(0, Math.min(height, player.pos.y)));
-		
+
 		updateBots(dt);
 		updateBullets(dt);
 		removeDead(bots);
 		removeDead(bullets);
 		removeDead(playerBullets);
 	}
-	
+
 	float spawnTime = 1;
 	void spawnBots(float dt) {
 		spawnTime -= dt;
@@ -72,7 +76,7 @@ public class Game {
 			b.update(dt);
 		}
 	}
-	
+
 	private static <T extends Unit> void removeDead(List<T> v) {
 		for(int i=0; i<v.size(); ) {
 			T t = v.get(i);

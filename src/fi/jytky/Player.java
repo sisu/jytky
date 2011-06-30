@@ -10,7 +10,7 @@ public class Player extends Unit {
 
 	public Player() {
 		pos = new Vector(.5f, .5f);
-		size = 0.05f;
+		size = 0.04f;
 	}
 
 	@Override
@@ -25,7 +25,7 @@ public class Player extends Unit {
 			shootTime -= dt;
 			while (shootTime <= 0) {
 				shootTime += .1f;
-				
+
 				Bullet b = new Bullet(.015f, Bullet.PLAYER);
 				b.pos = pos;
 				b.vel = new Vector(0, 1.5f);

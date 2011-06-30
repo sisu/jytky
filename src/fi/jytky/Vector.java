@@ -90,6 +90,10 @@ public class Vector {
 	public String toString() {
 		return "("+x+","+y+")";
 	}
-	
+
+	static Vector polar(float len, float ang) {
+		return new Vector(len * (float)Math.cos(ang), len * (float)Math.sin(ang));
+	}
+
 	public static Vector zero = new Vector(0,0);
 }
