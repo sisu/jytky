@@ -85,6 +85,9 @@ public class Vector {
 	public float dist(Vector v) {
 		return sub(v).length();
 	}
+	public float angle() {
+		return (float) Math.atan2(y, x);
+	}
 
 	@Override
 	public String toString() {
