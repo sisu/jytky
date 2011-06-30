@@ -26,7 +26,9 @@ public class Player extends Unit {
 			while (shootTime <= 0) {
 				shootTime += .1f;
 				
-				Bullet b = new Bullet(.05f, Bullet.PLAYER);
+				Bullet b = new Bullet(.015f, Bullet.PLAYER);
+				b.pos = pos;
+				b.vel = new Vector(0, 1.5f);
 				game.playerBullets.add(b);
 			}
 		}

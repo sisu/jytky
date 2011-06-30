@@ -17,6 +17,9 @@ public class Unit implements Drawable {
 	void update(float dt) {
 		pos = pos.add(vel.mult(dt));
 	}
+	boolean alive() {
+		return true;
+	}
 
 	public int getColor() {
 		return Color.rgb(255,0,0);

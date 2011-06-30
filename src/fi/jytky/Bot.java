@@ -13,6 +13,8 @@ public class Bot extends Unit {
 		return Color.rgb(255,128,0);
 	}
 	
+	float health = 1.f;
+	
 	float lifeTime = 2.f;
 	float shootTime = 0.5f;
 	void runAI(Game game, float dt) {
@@ -28,6 +30,11 @@ public class Bot extends Unit {
 	}
 	
 	boolean alive() {
-		return lifeTime > 0;
+		return lifeTime > 0 && health > 0;
+	}
+
+	@Override
+	public float getSize() {
+		return size;
 	}
 }

@@ -86,7 +86,10 @@ public class Vector {
 		return sub(v).length();
 	}
 
+	@Override
 	public String toString() {
 		return "("+x+","+y+")";
 	}
+	
+	public static Vector zero = new Vector(0,0);
 }

@@ -44,25 +44,24 @@ class GameView extends GLSurfaceView {
 
 	@Override
 	public boolean onTouchEvent(final MotionEvent evt) {
-		log(evt.toString());
 		printSamples(evt);
 		queueEvent(new Runnable() {
 
 			public void run() {
-				if (evt.getAction() == MotionEvent.ACTION_UP) {
-					game.player.vel = new Vector(0, 0);
-				} else {
-					Vector v = new Vector(evt.getX() / getWidth(), (getHeight() - evt.getY()) / getWidth());
-					Vector mmid = renderer.touchMid;
-					float dist = renderer.touchSize;
-					if (v.dist(mmid) < 4 * dist) {
-						Vector d = v.sub(mmid).div(dist);
-						if (d.length2() > 1) {
-							d = d.normalize();
-						}
+				game.player.vel = Vector.zero;
+				game.player.shooting = false;
+				if (evt.getActionMasked()==MotionEvent.ACTION_UP) return;
+				
+				for(int i=0; i<evt.getPointerCount(); ++i) {
+					if (evt.getActionMasked() == MotionEvent.ACTION_POINTER_UP && evt.getActionIndex()==i) continue;
+					Vector v = new Vector(evt.getX(i) / getWidth(), (getHeight() - evt.getY(i)) / getWidth());
+					if (v.dist(renderer.touchMid) < 4 * renderer.touchSize) {
+						Vector d = v.sub(renderer.touchMid).div(renderer.touchSize);
+						if (d.length2() > 1) d = d.normalize();
 						game.player.vel = d.mult(0.6f);
-					} else {
-						game.player.vel = new Vector(0, 0);
+					} else if (v.dist(renderer.buttonMid) < 1.2*renderer.buttonSize) {
+//						log("shooting");
+						game.player.shooting = true;
 					}
 				}
 			}
@@ -71,6 +70,7 @@ class GameView extends GLSurfaceView {
 	}
 
 	void printSamples(MotionEvent ev) {
+		log(ev.toString());
 		final int pointerCount = ev.getPointerCount();
 //		final int historySize = ev.getHistorySize();
 //		for (int h = 0; h < historySize; h++) {
@@ -80,7 +80,7 @@ class GameView extends GLSurfaceView {
 //						ev.getPointerId(p), ev.getHistoricalX(p, h), ev.getHistoricalY(p, h));
 //			}
 //		}
-		log("At time %d:", ev.getEventTime());
+//		log("At time %d:", ev.getEventTime());
 		for (int p = 0; p < pointerCount; p++) {
 			log("  pointer %d: (%f,%f)",
 					ev.getPointerId(p), ev.getX(p), ev.getY(p));

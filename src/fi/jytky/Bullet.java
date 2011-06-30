@@ -25,8 +25,9 @@ public class Bullet extends Unit {
 	}
 	
 	float lifeTime = 5;
+	boolean hit = false;
 	boolean alive() {
-		return lifeTime > 0;
+		return lifeTime > 0 && !hit;
 	}
 
 	@Override
