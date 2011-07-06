@@ -10,7 +10,7 @@ public class Player extends Unit {
 
 	public Player() {
 		pos = new Vector(.5f, .5f);
-		size = 0.04f;
+		size = 0.02f;
 	}
 
 	@Override

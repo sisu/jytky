@@ -5,7 +5,7 @@ import android.graphics.Color;
 public class Bot extends Unit {
 
 	public Bot() {
-		size = .05f;
+		size = .03f;
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class Bot extends Unit {
 		if (shootTime > 0) return;
 		shootTime += 0.7f;
 
-		Bullet b = new Bullet(.02f, Bullet.BOT);
+		Bullet b = new Bullet(.01f, Bullet.BOT);
 		b.pos = pos;
 		b.vel = game.player.pos.sub(pos).normalize().mult(.4f);
 		game.bullets.add(b);

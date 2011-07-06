@@ -8,27 +8,27 @@ public class FirstStage implements Stage {
 
 	private void init() {
 		float prev = 0;
-		for (int i = 0; i < 20; ++i) {
-			Bot b = new Bot();
-			boolean odd = (i & 1) != 0;
-			if (i >= 10) {
-				odd = i >= 15;
-			}
-			b.pos = new Vector(odd ? 1.05f : -.05f, 1.3f);
-			b.vel = new Vector((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
-			b.lifeTime = 2.5f;
-			prev += i < 10 ? 1.5f : .5f;
-			spawns.add(new Spawn(b, prev));
-		}
-		prev += 3.f;
-		spawns.add(new Spawn(new CircleShoot(false), prev));
-		for (int i = 0; i < 3; ++i) {
-			prev += i < 2 ? 3.f : 0.6f;
-			spawns.add(new Spawn(new CircleShoot(false), prev));
-			spawns.add(new Spawn(new CircleShoot(true), prev));
-		}
-
-		prev += 9.f;
+//		for (int i = 0; i < 20; ++i) {
+//			Bot b = new Bot();
+//			boolean odd = (i & 1) != 0;
+//			if (i >= 10) {
+//				odd = i >= 15;
+//			}
+//			b.pos = new Vector(odd ? 1.05f : -.05f, 1.3f);
+//			b.vel = new Vector((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
+//			b.lifeTime = 2.5f;
+//			prev += i < 10 ? 1.5f : .5f;
+//			spawns.add(new Spawn(b, prev));
+//		}
+//		prev += 3.f;
+//		spawns.add(new Spawn(new CircleShoot(false), prev));
+//		for (int i = 0; i < 3; ++i) {
+//			prev += i < 2 ? 3.f : 0.6f;
+//			spawns.add(new Spawn(new CircleShoot(false), prev));
+//			spawns.add(new Spawn(new CircleShoot(true), prev));
+//		}
+//
+//		prev += 9.f;
 		spawns.add(new Spawn(new Boss(), prev));
 	}
 
@@ -50,9 +50,9 @@ public class FirstStage implements Stage {
 			}
 			shootTime += 1;
 
-			int n = 12;
+			int n = 16;
 			for (int i = 0; i < n; ++i) {
-				Bullet b = new Bullet(.03f, Bullet.BOT);
+				Bullet b = new Bullet(.015f, Bullet.BOT);
 				float a = (float) (2 * Math.PI * i / n);
 				b.pos = pos;
 				b.vel = Vector.polar(.2f, a);
@@ -72,7 +72,7 @@ public class FirstStage implements Stage {
 		public Boss() {
 			pos = new Vector(.5f, 1.2f);
 			vel = Vector.zero;
-			size = .1f;
+			size = .07f;
 			lifeTime = 300;
 			health = 20;
 			shootTime = .5f;
@@ -85,22 +85,22 @@ public class FirstStage implements Stage {
 			shootTime -= dt;
 			shootTime2 -= dt;
 			if (shootTime < 0) {
-				shootTime += 2.5f;
+				shootTime += 1.5f;
 				shootTime2 = 0;
 				bulletsLeft = 6;
 			}
 			if (shootTime2 <= 0 && bulletsLeft > 0) {
-				shootTime2 += .3f;
+				shootTime2 += .2f;
 				--bulletsLeft;
 
 				float ang = game.player.pos.sub(pos).angle();
-				int n = 16;
+				int n = 20;
 				for (int i = 0; i < n; ++i) {
-					Bullet b = new Bullet(.02f, Bullet.BOT);
+					Bullet b = new Bullet(.01f, Bullet.BOT);
 					float a = (float) (2 * Math.PI * i / n);
 					a += .1f * ((float)Math.random()-.5f);
 					b.pos = pos;
-					b.vel = Vector.polar(.2f, ang + a);
+					b.vel = Vector.polar(.25f, ang + a);
 					b.lifeTime = 8;
 					game.bullets.add(b);
 				}
