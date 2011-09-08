@@ -7,7 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 
-public class MainActivity extends Activity {
+
+public class Jytky extends Activity {
 
 	/** Called when the activity is first created. */
 	@Override
@@ -31,7 +32,6 @@ public class MainActivity extends Activity {
 	}
 	private GLSurfaceView view;
 }
-
 class GameView extends GLSurfaceView {
 
 	GameView(Context ctx) {
@@ -51,7 +51,7 @@ class GameView extends GLSurfaceView {
 				game.player.vel = Vector.zero;
 				game.player.shooting = false;
 				if (evt.getActionMasked()==MotionEvent.ACTION_UP) return;
-				
+
 				for(int i=0; i<evt.getPointerCount(); ++i) {
 					if (evt.getActionMasked() == MotionEvent.ACTION_POINTER_UP && evt.getActionIndex()==i) continue;
 					Vector v = new Vector(evt.getX(i) / getWidth(), (getHeight() - evt.getY(i)) / getWidth());

@@ -8,27 +8,27 @@ public class FirstStage implements Stage {
 
 	private void init() {
 		float prev = 0;
-//		for (int i = 0; i < 20; ++i) {
-//			Bot b = new Bot();
-//			boolean odd = (i & 1) != 0;
-//			if (i >= 10) {
-//				odd = i >= 15;
-//			}
-//			b.pos = new Vector(odd ? 1.05f : -.05f, 1.3f);
-//			b.vel = new Vector((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
-//			b.lifeTime = 2.5f;
-//			prev += i < 10 ? 1.5f : .5f;
-//			spawns.add(new Spawn(b, prev));
-//		}
-//		prev += 3.f;
-//		spawns.add(new Spawn(new CircleShoot(false), prev));
-//		for (int i = 0; i < 3; ++i) {
-//			prev += i < 2 ? 3.f : 0.6f;
-//			spawns.add(new Spawn(new CircleShoot(false), prev));
-//			spawns.add(new Spawn(new CircleShoot(true), prev));
-//		}
-//
-//		prev += 9.f;
+		for (int i = 0; i < 20; ++i) {
+			Bot b = new Bot();
+			boolean odd = (i & 1) != 0;
+			if (i >= 10) {
+				odd = i >= 15;
+			}
+			b.pos = new Vector(odd ? 1.05f : -.05f, 1.3f);
+			b.vel = new Vector((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
+			b.lifeTime = 2.5f;
+			prev += i < 10 ? 1.5f : .5f;
+			spawns.add(new Spawn(b, prev));
+		}
+		prev += 3.f;
+		spawns.add(new Spawn(new CircleShoot(false), prev));
+		for (int i = 0; i < 3; ++i) {
+			prev += i < 2 ? 3.f : 0.6f;
+			spawns.add(new Spawn(new CircleShoot(false), prev));
+			spawns.add(new Spawn(new CircleShoot(true), prev));
+		}
+
+		prev += 9.f;
 		spawns.add(new Spawn(new Boss(), prev));
 	}
 
