@@ -24,7 +24,7 @@ public class Game {
 		stage.update(this, dt);
 //		spawnBots(dt);
 		player.update(dt);
-		player.pos = new Vector(
+		player.pos = new Vec2(
 				Math.max(0, Math.min(width, player.pos.x)),
 				Math.max(0, Math.min(height, player.pos.y)));
 
@@ -41,8 +41,8 @@ public class Game {
 		if (spawnTime > 0) return;
 		spawnTime += 1;
 		Bot b = new Bot();
-		b.pos = new Vector(-.1f, height*3/4);
-		b.vel = new Vector(0.6f, .3f*((float)Math.random()-.5f));
+		b.pos = new Vec2(-.1f, height*3/4);
+		b.vel = new Vec2(0.6f, .3f*((float)Math.random()-.5f));
 		b.size = 0.1f;
 		bots.add(b);
 //		Log.i("asd", "Spawning bot; "+b.pos+" "+b.vel);

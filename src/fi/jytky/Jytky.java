@@ -48,15 +48,15 @@ class GameView extends GLSurfaceView {
 		queueEvent(new Runnable() {
 
 			public void run() {
-				game.player.vel = Vector.zero;
+				game.player.vel = Vec2.zero;
 				game.player.shooting = false;
 				if (evt.getActionMasked()==MotionEvent.ACTION_UP) return;
 
 				for(int i=0; i<evt.getPointerCount(); ++i) {
 					if (evt.getActionMasked() == MotionEvent.ACTION_POINTER_UP && evt.getActionIndex()==i) continue;
-					Vector v = new Vector(evt.getX(i) / getWidth(), (getHeight() - evt.getY(i)) / getWidth());
+					Vec2 v = new Vec2(evt.getX(i) / getWidth(), (getHeight() - evt.getY(i)) / getWidth());
 					if (v.dist(renderer.touchMid) < 4 * renderer.touchSize) {
-						Vector d = v.sub(renderer.touchMid).div(renderer.touchSize);
+						Vec2 d = v.sub(renderer.touchMid).div(renderer.touchSize);
 						if (d.length2() > 1) d = d.normalize();
 						game.player.vel = d.mult(0.6f);
 					} else if (v.dist(renderer.buttonMid) < 1.2*renderer.buttonSize) {

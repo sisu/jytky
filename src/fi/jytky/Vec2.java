@@ -1,59 +1,59 @@
 package fi.jytky;
 
 /**
- * Vector is a simple immutable geometric 2D-vector.
+ * Vec2 is a simple immutable geometric 2D-vector.
  */
-public class Vector {
+public class Vec2 {
 
 	/** Coordinates of the vector. */
 	final float x,y;
 
 	/** Creates a vector. */
-	public Vector(float x, float y) {
+	public Vec2(float x, float y) {
 		this.x=x;
 		this.y=y;
 	}
 
 	/** Sums two vectors together. */
-	public Vector add(Vector v) {
-		return new Vector(x+v.x, y+v.y);
+	public Vec2 add(Vec2 v) {
+		return new Vec2(x+v.x, y+v.y);
 	}
 	/** Sums vector to another vector represented by numbers. */
-	public Vector add(float a, float b) {
-		return new Vector(x+a, y+b);
+	public Vec2 add(float a, float b) {
+		return new Vec2(x+a, y+b);
 	}
 
 	/** Subtacts another vector from this vector. */
-	public Vector sub(Vector v) {
-		return new Vector(x-v.x, y-v.y);
+	public Vec2 sub(Vec2 v) {
+		return new Vec2(x-v.x, y-v.y);
 	}
 	/** Subtacts another vector from this vector. */
-	public Vector sub(float a, float b) {
-		return new Vector(x-a, y-b);
+	public Vec2 sub(float a, float b) {
+		return new Vec2(x-a, y-b);
 	}
 
 	/** Multiplies this vector by a constant. */
-	public Vector mult(float a) {
-		return new Vector(a*x, a*y);
+	public Vec2 mult(float a) {
+		return new Vec2(a*x, a*y);
 	}
 	/** Divides this vector by a constant. */
-	public Vector div(float a) {
-		return new Vector(x/a, y/a);
+	public Vec2 div(float a) {
+		return new Vec2(x/a, y/a);
 	}
 	/** Negates this vector; this is same as multiplying by -1. */
-	public Vector neg() {
-		return new Vector(-x,-y);
+	public Vec2 neg() {
+		return new Vec2(-x,-y);
 	}
 
 	/** Calculates the dot product between vectors. */
-	public float dot(Vector v) {
+	public float dot(Vec2 v) {
 		return x*v.x + y*v.y;
 	}
 	/** Calculates the z-component of the cross product between vectors.
 	 * The cross product between 2 vectors at xy-axes is always parallel to
 	 * z-axis so this is the only information needed about cross product.
 	 */
-	public float cross(Vector v) {
+	public float cross(Vec2 v) {
 		return x*v.y - y*v.x;
 	}
 	/** Calculates the z-component of the cross product between vectors.
@@ -75,14 +75,14 @@ public class Vector {
 	/** Returns this vector normalized.
 	 * If this vector is a null vector, resulting vector may have NaN-values.
 	 */
-	public Vector normalize() {
+	public Vec2 normalize() {
 		return div(length());
 	}
 
-	public float dist2(Vector v) {
+	public float dist2(Vec2 v) {
 		return sub(v).length2();
 	}
-	public float dist(Vector v) {
+	public float dist(Vec2 v) {
 		return sub(v).length();
 	}
 	public float angle() {
@@ -94,9 +94,9 @@ public class Vector {
 		return "("+x+","+y+")";
 	}
 
-	static Vector polar(float len, float ang) {
-		return new Vector(len * (float)Math.cos(ang), len * (float)Math.sin(ang));
+	static Vec2 polar(float len, float ang) {
+		return new Vec2(len * (float)Math.cos(ang), len * (float)Math.sin(ang));
 	}
 
-	public static Vector zero = new Vector(0,0);
+	public static Vec2 zero = new Vec2(0,0);
 }

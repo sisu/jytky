@@ -9,7 +9,7 @@ public class Player extends Unit {
 	Game game;
 
 	public Player() {
-		pos = new Vector(.5f, .5f);
+		pos = new Vec2(.5f, .5f);
 		size = 0.02f;
 	}
 
@@ -28,7 +28,7 @@ public class Player extends Unit {
 
 				Bullet b = new Bullet(.015f, Bullet.PLAYER);
 				b.pos = pos;
-				b.vel = new Vector(0, 1.5f);
+				b.vel = new Vec2(0, 1.5f);
 				game.playerBullets.add(b);
 			}
 		}

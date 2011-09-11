@@ -11,14 +11,16 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class GameRenderer implements GLSurfaceView.Renderer {
 
+	Renderer render = new Renderer();
+
 	public GameRenderer(Game game) {
 		this.game = game;
 	}
 
 	Game game;
 	float touchSize = 0.1f;
-	Vector touchMid = new Vector(.9f - 1.5f * touchSize, .1f + 1.5f * touchSize);
-	Vector buttonMid = new Vector(.15f, 1.2f);
+	Vec2 touchMid = new Vec2(.9f - 1.5f * touchSize, .1f + 1.5f * touchSize);
+	Vec2 buttonMid = new Vec2(.15f, 1.2f);
 	float buttonSize = .12f;
 
 	public void onSurfaceCreated(GL10 gl, EGLConfig eglc) {
@@ -31,16 +33,27 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		game.height = (float) height / width;
 	}
 
+	int frames=0;
+	long ftime=System.currentTimeMillis()/1000;
+
 	public void onDrawFrame(GL10 gl) {
+		long ctime = System.currentTimeMillis() / 1000;
+		while(ftime < ctime) {
+			Log.i("ASD", "FPS: "+frames);
+			++ftime;
+			frames=0;
+		}
+		++frames;
 		game.update();
 
-		setProj(gl);
-		gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		gl.glLoadIdentity();
-		draw(gl, game.player);
-		for(Bot b : game.bots) draw(gl, b);
-		for(Bullet b : game.bullets) draw(gl, b);
-		for(Bullet b : game.playerBullets) draw(gl, b);
+		render.width = game.width;
+		render.height = game.height;
+		render.init(gl);
+		render.draw(game.player);
+		for(Bot b : game.bots) render.draw(b);
+		for(Bullet b : game.bullets) render.draw(b);
+		for(Bullet b : game.playerBullets) render.draw(b);
+		render.finish();
 		drawButtons(gl);
 	}
 
@@ -65,7 +78,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		fb.position(0);
 		return fb;
 	}
-	
+
 	void draw(GL10 gl, Drawable d) {
 		int color = d.getColor();
 //		Log.i("asd", "color: "+color);
@@ -74,7 +87,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 //		gl.glColor4x(color&0xff, (color>>>8)&0xff, (color>>>16)&0xff, 255);
 //		gl.glColor4f(0, 1, 0, 1);
 		gl.glPushMatrix();
-		Vector pos = d.getPos();
+		Vec2 pos = d.getPos();
 		gl.glTranslatef(pos.x, pos.y, 0);
 		float s = d.getSize();
 		gl.glScalef(s, s, s);
@@ -102,7 +115,7 @@ public class GameRenderer implements GLSurfaceView.Renderer {
 		return makeBuf(vs);
 	}
 
-	private void drawCircle(GL10 gl, Vector touchMid, float touchSize) {
+	private void drawCircle(GL10 gl, Vec2 touchMid, float touchSize) {
 		gl.glPushMatrix();
 		gl.glTranslatef(touchMid.x, touchMid.y, 0);
 		gl.glScalef(touchSize, touchSize, touchSize);

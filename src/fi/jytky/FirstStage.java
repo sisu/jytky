@@ -14,8 +14,8 @@ public class FirstStage implements Stage {
 			if (i >= 10) {
 				odd = i >= 15;
 			}
-			b.pos = new Vector(odd ? 1.05f : -.05f, 1.3f);
-			b.vel = new Vector((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
+			b.pos = new Vec2(odd ? 1.05f : -.05f, 1.3f);
+			b.vel = new Vec2((odd ? -1 : 1) * .4f, .2f * ((float) Math.random() - .5f));
 			b.lifeTime = 2.5f;
 			prev += i < 10 ? 1.5f : .5f;
 			spawns.add(new Spawn(b, prev));
@@ -35,8 +35,8 @@ public class FirstStage implements Stage {
 	private static class CircleShoot extends Bot {
 
 		private CircleShoot(boolean odd) {
-			pos = new Vector(odd ? 1.05f : -.05f, 1.2f);
-			vel = new Vector((odd ? -1 : 1) * .3f, 0);
+			pos = new Vec2(odd ? 1.05f : -.05f, 1.2f);
+			vel = new Vec2((odd ? -1 : 1) * .3f, 0);
 			health = 2;
 			lifeTime = 3;
 			shootTime = 1;
@@ -55,7 +55,7 @@ public class FirstStage implements Stage {
 				Bullet b = new Bullet(.015f, Bullet.BOT);
 				float a = (float) (2 * Math.PI * i / n);
 				b.pos = pos;
-				b.vel = Vector.polar(.2f, a);
+				b.vel = Vec2.polar(.2f, a);
 				b.lifeTime = 8;
 				game.bullets.add(b);
 			}
@@ -70,8 +70,8 @@ public class FirstStage implements Stage {
 	private static class Boss extends Bot {
 
 		public Boss() {
-			pos = new Vector(.5f, 1.2f);
-			vel = Vector.zero;
+			pos = new Vec2(.5f, 1.2f);
+			vel = Vec2.zero;
 			size = .07f;
 			lifeTime = 300;
 			health = 20;
@@ -100,7 +100,7 @@ public class FirstStage implements Stage {
 					float a = (float) (2 * Math.PI * i / n);
 					a += .1f * ((float)Math.random()-.5f);
 					b.pos = pos;
-					b.vel = Vector.polar(.25f, ang + a);
+					b.vel = Vec2.polar(.25f, ang + a);
 					b.lifeTime = 8;
 					game.bullets.add(b);
 				}
