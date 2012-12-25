@@ -15,7 +15,7 @@ GLLIBS:=-lGL -lGLU
 LIBS:=$(shell sdl-config --libs) $(GLLIBS)
 #LIBS:=$(shell sdl-config --libs) -lGLESv2 -lGLU $(RENDERLIBS) $(JEELIBS)
 
-.PHONY: all clean $(BIN)
+.PHONY: all clean
 
 all: $(ODIRS) $(BIN)
 
@@ -31,4 +31,4 @@ clean:
 $(ODIRS):
 	mkdir -p "$@"
 
-include $(wildcard $(ODIR)/*.d)
+include $(wildcard $(addsuffix /*.d,$(ODIRS)))
